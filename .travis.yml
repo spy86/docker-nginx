@@ -13,12 +13,12 @@ after_success:
   - if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push $DOCKER_REPO_SLUG:$TRAVIS_TAG; else true ; fi
   
 notifications:
-  email: false    # default notification method
-  slack:
-    rooms:
-      - "$SECURE"
-    on_success: always  # change: send a notification when the build status changes.
-    on_failure: always  # always: always send a notification.
+  webhooks:
+    urls:
+      - $SECURE
+    on_success: always # default: always
+    on_failure: always # default: always
+    on_start: always # default: always
     template:
       - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
       - "Execution time: *%{duration}*"
