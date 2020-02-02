@@ -16,7 +16,7 @@ notifications:
   email: false    # default notification method
   slack:
     rooms:
-      - secure: $SECURE
+      - secure: "$SECURE"
     on_success: always  # change: send a notification when the build status changes.
     on_failure: always  # always: always send a notification.
     template:
