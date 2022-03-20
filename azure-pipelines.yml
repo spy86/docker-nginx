@@ -1,5 +1,12 @@
 name: $(date:yyyyMMdd)$(rev:.r)
 
+schedules:
+- cron: "0 0 1 * *"
+  displayName: Run At 00:00 on day-of-month 1
+  branches:
+    include:
+    - main
+
 trigger:
 - main
 
