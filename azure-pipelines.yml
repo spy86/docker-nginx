@@ -54,4 +54,3 @@ stages:
         containerRegistry: 'Dockerhub'
         repository: 'spy86/nginx'
         command: 'push'
-        tags: 'latest'
