@@ -48,3 +48,10 @@ stages:
         repository: 'spy86/nginx'
         command: 'push'
         tags: '$(tag)'
+    - task: Docker@2
+      displayName: Push an image
+      inputs:
+        containerRegistry: 'Dockerhub'
+        repository: 'spy86/nginx'
+        command: 'push'
+        tags: 'latest'
