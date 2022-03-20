@@ -48,4 +48,3 @@ stages:
         repository: 'nginx'
         command: 'push'
         tags: '$(tag)'
-        arguments: '--build-arg NGINX_VERSION=$(version)'
