@@ -33,15 +33,10 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Dockerhub Login
-      inputs:
-        containerRegistry: 'Dockerhub'
-        command: 'login'
-    - task: Docker@2
       displayName: Build an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'nginx'
+        repository: 'spy86/nginx'
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
@@ -50,6 +45,6 @@ stages:
       displayName: Push an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'nginx'
+        repository: 'spy86/nginx'
         command: 'push'
         tags: '$(tag)'
