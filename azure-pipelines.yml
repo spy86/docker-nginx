@@ -33,7 +33,6 @@ stages:
       inputs:
         containerRegistry: 'Dockerhub'
         repository: 'nginx'
-        command: 'build'
-        Dockerfile: '**/Dockerfile'
+        command: 'push'
         tags: '$(tag)'
         arguments: '--build-arg NGINX_VERSION=$(version)'
