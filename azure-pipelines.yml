@@ -1,3 +1,5 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
 trigger:
 - main
 
@@ -5,7 +7,7 @@ resources:
 - repo: self
 
 variables:
-  tag: $(date:yyyyMMdd)$(rev:.r)'
+  tag: '$(Build.BuildNumber)''
 
 stages:
 - stage: Build
