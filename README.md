@@ -1,6 +1,6 @@
 # Docker Nginx container
 
-[![docker-drupal](https://img.shields.io/badge/spy86-nginx-blue.svg)](https://cloud.docker.com/repository/docker/spy86/nginx) [![Build Status](https://dev.azure.com/DevOpsSysOps/Docker/_apis/build/status/Docker%20Nginx?branchName=main)](https://dev.azure.com/DevOpsSysOps/Docker/_build/latest?definitionId=47&branchName=main)
+[![docker-drupal](https://img.shields.io/badge/spy86-nginx-blue.svg)](https://cloud.docker.com/repository/docker/spy86/nginx) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What is Nginx
 Nginx is an open source reverse proxy server for HTTP/HTTPS/SMTP/POP3/IMAP protocols, we can use this well as a load balancer, HTTP cache, and a web server.
