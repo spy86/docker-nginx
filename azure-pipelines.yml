@@ -42,7 +42,6 @@ stages:
         tags: '$(tag)'
         arguments: '--build-arg NGINX_VERSION=$(version)'
     - task: Docker@2
-      displayName: Push an image
       inputs:
         containerRegistry: 'Dockerhub'
         repository: 'nginx'
