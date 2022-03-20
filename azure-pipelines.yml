@@ -21,6 +21,6 @@ stages:
       inputs:
         containerRegistry: 'Dockerhub'
         repository: 'nginx'
-        command: 'buildAndPush'
+        command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
