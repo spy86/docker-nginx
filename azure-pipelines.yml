@@ -8,6 +8,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildNumber)'
+  version: '1.21.6'
 
 stages:
 - stage: Build
@@ -26,3 +27,13 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
+        arguments: '--build-arg NGINX_VERSION=$(varsion)'
+    - task: Docker@2
+      displayName: Push an image
+      inputs:
+        containerRegistry: 'Dockerhub'
+        repository: 'nginx'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+        arguments: '--build-arg NGINX_VERSION=$(varsion)'
