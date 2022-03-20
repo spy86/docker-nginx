@@ -51,7 +51,7 @@ stages:
 
 - stage: Build_Latest_tag
   dependsOn: [Build]
-  displayName: Build image
+  displayName: Rebuild an latest image
   jobs:
   - job: Build_latest_tag
     displayName: Build
