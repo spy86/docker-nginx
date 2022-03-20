@@ -6,9 +6,15 @@ trigger:
 resources:
 - repo: self
 
+parameters:
+- name: nginx_version
+  displayName: Nginx Version
+  type: string
+  default: '1.21.6'
+
 variables:
   tag: '$(Build.BuildNumber)'
-  version: '1.21.6'
+  version: ${{parameters.nginx_version}}
 
 stages:
 - stage: Build
