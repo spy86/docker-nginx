@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)'
+  tag: $(date:yyyyMMdd)$(rev:.r)'
 
 stages:
 - stage: Build
