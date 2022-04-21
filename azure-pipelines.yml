@@ -1,5 +1,18 @@
 name: $(date:yyyyMMdd)$(rev:.r)
 
+parameters:
+- name: TestBuild
+  displayName: 'Test Build ???'
+  type: string
+  default: 'false'
+  values:
+    - true
+    - false
+- name: nginx_version
+  displayName: Nginx Version
+  type: string
+  default: '1.21.6'
+
 schedules:
 - cron: "0 0 1 * *"
   displayName: Run At 00:00 on day-of-month 1
@@ -13,18 +26,19 @@ trigger:
 resources:
 - repo: self
 
-parameters:
-- name: nginx_version
-  displayName: Nginx Version
-  type: string
-  default: '1.21.6'
-
 variables:
-  tag: '$(Build.BuildNumber)'
-  version: ${{parameters.nginx_version}}
+  - name: TestBuild
+    value: ${{parameters.TestBuild}}
+  - name: tag
+    value: '$(Build.BuildNumber)'
+  - name: image_name
+    value: 'nginx'
+  - name: version
+    value: ${{parameters.nginx_version}} 
 
 stages:
 - stage: Build
+  condition: eq('${{variables.TestBuild}}', 'false')
   displayName: Build image
   jobs:
   - job: Build
@@ -36,20 +50,20 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'spy86/nginx'
+        repository: 'spy86/$(image_name)'
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
-        arguments: '--build-arg NGINX_VERSION=$(version)'
     - task: Docker@2
       displayName: Push an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'spy86/nginx'
+        repository: 'spy86/$(image_name)'
         command: 'push'
         tags: '$(tag)'
 
 - stage: Build_Latest_tag
+  condition: eq('${{variables.TestBuild}}', 'false')
   dependsOn: [Build]
   displayName: Rebuild an latest image
   jobs:
@@ -62,15 +76,32 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'spy86/nginx'
+        repository: 'spy86/$(image_name)'
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: 'latest'
-        arguments: '--build-arg NGINX_VERSION=$(version)'
     - task: Docker@2
       displayName: Push an image
       inputs:
         containerRegistry: 'Dockerhub'
-        repository: 'spy86/nginx'
+        repository: 'spy86/$(image_name)'
         command: 'push'
+        tags: 'latest'
+
+- stage: Test_Build
+  condition: eq('${{variables.TestBuild}}', 'true')
+  displayName: Test Build
+  jobs:
+  - job: Test_Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'Dockerhub'
+        repository: 'spy86/$(image_name)'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
         tags: 'latest'
