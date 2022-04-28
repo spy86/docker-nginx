@@ -12,6 +12,14 @@ parameters:
   displayName: Nginx Version
   type: string
   default: '1.21.6'
+- name: nginx_njs_version
+  displayName: Nginx NJS Version
+  type: string
+  default: '0.7.0'
+- name: nginx_pkg_release
+  displayName: Nginx PGK Release
+  type: string
+  default: '1'
 
 schedules:
 - cron: "0 0 1 * *"
@@ -35,6 +43,10 @@ variables:
     value: 'nginx'
   - name: version
     value: ${{parameters.nginx_version}} 
+  - name: nginx_version_njs
+    value: ${{parameters.nginx_njs_version}} 
+  - name: nginx_version_pkg_release
+    value: ${{parameters.nginx_pkg_release}} 
 
 stages:
 - stage: Build
@@ -54,6 +66,7 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
+        arguments: '--build-arg NGINX_VERSION=$(version) --build-arg NJS_VERSION=$(nginx_version_njs) --build-arg PKG_RELEASE=$(nginx_version_pkg_release)'
     - task: Docker@2
       displayName: Push an image
       inputs:
@@ -80,6 +93,7 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: 'latest'
+        arguments: '--build-arg NGINX_VERSION=$(version) --build-arg NJS_VERSION=$(nginx_version_njs) --build-arg PKG_RELEASE=$(nginx_version_pkg_release)'
     - task: Docker@2
       displayName: Push an image
       inputs:
@@ -105,3 +119,4 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: 'latest'
+        arguments: '--build-arg NGINX_VERSION=$(version) --build-arg NJS_VERSION=$(nginx_version_njs) --build-arg PKG_RELEASE=$(nginx_version_pkg_release)'
