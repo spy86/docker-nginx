@@ -11,7 +11,7 @@ parameters:
 - name: nginx_version
   displayName: Nginx Version
   type: string
-  default: '1.21.6'
+  default: '1.20.2'
 - name: nginx_njs_version
   displayName: Nginx NJS Version
   type: string
